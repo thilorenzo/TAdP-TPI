@@ -1,0 +1,32 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum EstadoTurno {
+  PENDIENTE
+  CONFIRMADO
+  CANCELADO
+}
+
+model Vehiculo {
+  id        Int      @id @default(autoincrement())
+  patente   String   @unique
+  marca     String?
+  modelo    String?
+  anio      Int?
+  turnos    Turno[]
+}
+
+model Turno {
+  id         Int         @id @default(autoincrement())
+  vehiculo   Vehiculo    @relation(fields: [vehiculoId], references: [id])
+  vehiculoId Int
+  fechaHora  DateTime
+  estado     EstadoTurno @default(PENDIENTE)
+  createdAt  DateTime    @default(now())
+}
