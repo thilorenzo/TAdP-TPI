@@ -9,15 +9,15 @@ const {
 } = require('../services/turnos.service');
 
 async function crearTurnoController(req, res) {
+  const { patente, fechaHora, modelo, marca, anio } = req.body;
+
+  if (!patente || !fechaHora || !modelo || !marca || !anio) {
+    return res
+      .status(400)
+      .json({ message: 'Patente, fechaHora, marca, modelo y año son obligatorios' });
+  }
+
   try {
-    const { patente, fechaHora, modelo, marca, anio } = req.body;
-
-    if (!patente || !fechaHora) {
-      return res
-        .status(400)
-        .json({ message: 'patente y fechaHora son obligatorios' });
-    }
-
     const turno = await crearTurno(patente, fechaHora, modelo, marca, anio);
     return res.status(201).json(turno);
   } catch (err) {

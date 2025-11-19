@@ -3,7 +3,7 @@ import { obtenerTurnos, confirmarTurno, cancelarTurno } from '../services/api';
 
 const ESTADOS_FILTRO = ['TODOS', 'PENDIENTE', 'CONFIRMADO', 'CANCELADO', 'COMPLETADO', 'RECHEQUEAR'];
 
-function TurnosPendientesPage({ onGoToCrearTurno }) {
+function TurnosPendientesPage({ onGoToCrearTurno, role }) {
   const [turnos, setTurnos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mensaje, setMensaje] = useState(null);
@@ -18,7 +18,7 @@ function TurnosPendientesPage({ onGoToCrearTurno }) {
     setError(null);
     setMensaje(null);
     try {
-      const data = await obtenerTurnos();
+      const data = await obtenerTurnos({}, role);
       setTurnos(data);
     } catch (err) {
       setError(err.message);
@@ -35,7 +35,7 @@ function TurnosPendientesPage({ onGoToCrearTurno }) {
     setError(null);
     setMensaje(null);
     try {
-      await confirmarTurno(id);
+      await confirmarTurno(id, role);
       setMensaje(`Turno ${id} confirmado`);
       await cargarTurnos();
     } catch (err) {
@@ -47,7 +47,7 @@ function TurnosPendientesPage({ onGoToCrearTurno }) {
     setError(null);
     setMensaje(null);
     try {
-      await cancelarTurno(id);
+      await cancelarTurno(id, role);
       setMensaje(`Turno ${id} cancelado`);
       await cargarTurnos();
     } catch (err) {

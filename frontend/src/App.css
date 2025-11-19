@@ -68,7 +68,7 @@ body {
 }
 
 .nav-button:hover {
-  background-color: #e0ebff;
+  background-color: #003f7a;
 }
 
 .card {
@@ -186,4 +186,32 @@ body {
 
 .message.success {
   color: #008000;
+}
+
+.role-selector {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.role-button {
+  background-color: white;
+  border: 2px solid #1b3c8c;
+  color: #1b3c8c;
+  padding: 8px 14px;
+  font-size: 14px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.role-button:hover {
+  background-color: #d9dce3;
+}
+
+.role-button.active {
+  background-color: #00376d;
+  color: white;
+  border-color: #1b3c8c;
 }

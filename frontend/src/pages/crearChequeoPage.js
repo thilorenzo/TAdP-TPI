@@ -12,7 +12,7 @@ const STEPS = [
   { id: 8, nombre: 'Sistema eléctrico / electrónica' }
 ];
 
-function CrearChequeoPage({ onGoToCrearTurno } ) {
+function CrearChequeoPage({ onGoToCrearTurno, role }) {
   const [patente, setPatente] = useState('');
   const [puntajes, setPuntajes] = useState({});
   const [observacion, setObservacion] = useState('');
@@ -40,7 +40,7 @@ function CrearChequeoPage({ onGoToCrearTurno } ) {
     }
 
     try {
-      const turno = await buscarTurnoConfirmadoPorPatente(patente.toUpperCase());
+      const turno = await buscarTurnoConfirmadoPorPatente(patente.toUpperCase(), role);
       setTurnoUsado(turno);
       setMensaje(`Turno confirmado encontrado para la patente ${patente.toUpperCase()}`);
     } catch (err) {
@@ -73,7 +73,7 @@ function CrearChequeoPage({ onGoToCrearTurno } ) {
     }));
 
     try {
-      const resp = await crearChequeo(turnoUsado.id, puntosArray, observacion);
+      const resp = await crearChequeo(turnoUsado.id, puntosArray, observacion, role);
       setMensaje('Chequeo registrado correctamente');
       setResultado(resp);
     } catch (err) {
@@ -92,7 +92,7 @@ function CrearChequeoPage({ onGoToCrearTurno } ) {
             className="form-input"
             value={patente}
             onChange={(e) => setPatente(e.target.value.toUpperCase())}
-            placeholder="ABC123"
+            placeholder="Ej: ABC123"
           />
         </div>
         <button type="submit" className="button-primary">
@@ -162,30 +162,29 @@ function CrearChequeoPage({ onGoToCrearTurno } ) {
         </form>
       )}
 
-        {resultado && (
+      {resultado && (
         <div className="card" style={{ marginTop: '12px' }}>
-            <h3 className="card-title">Resultado del chequeo</h3>
-            <p><strong>ID chequeo:</strong> {resultado.id}</p>
-            <p><strong>ID turno:</strong> {resultado.appointmentId}</p>
-            <p><strong>Total:</strong> {resultado.total}</p>
-            <p><strong>Resultado:</strong> {resultado.resultado}</p>
-            {resultado.observacion && (
+          <h3 className="card-title">Resultado del chequeo</h3>
+          <p><strong>ID chequeo:</strong> {resultado.id}</p>
+          <p><strong>ID turno:</strong> {resultado.appointmentId}</p>
+          <p><strong>Total:</strong> {resultado.total}</p>
+          <p><strong>Resultado:</strong> {resultado.resultado}</p>
+          {resultado.observacion && (
             <p><strong>Observación:</strong> {resultado.observacion}</p>
-            )}
+          )}
 
-            {resultado.resultado === 'RECHEQUEO' && onGoToCrearTurno && (
+          {resultado.resultado === 'RECHEQUEO' && onGoToCrearTurno && (
             <button
-                type="button"
-                className="button-secondary"
-                style={{ marginTop: '8px' }}
-                onClick={onGoToCrearTurno}
+              type="button"
+              className="button-secondary"
+              style={{ marginTop: '8px' }}
+              onClick={onGoToCrearTurno}
             >
-                Nuevo turno
+              Nuevo turno
             </button>
-            )}
+          )}
         </div>
-        )}
-
+      )}
     </div>
   );
 }
