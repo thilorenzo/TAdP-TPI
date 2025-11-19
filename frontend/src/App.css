@@ -215,3 +215,13 @@ body {
   color: white;
   border-color: #1b3c8c;
 }
+
+.form-turno input,
+.form-turno select {
+  width: 280px;
+  margin-bottom: 12px;
+  padding: 6px;
+  border: 1px solid f6f7f9;
+  background-color: #f6f7f9;
+  font-size: 14px;
+}

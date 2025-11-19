@@ -80,7 +80,7 @@ function CrearTurnoPage() {
   return (
     <div className="card">
       <h2 className="card-title">Solicitar turno de revisión</h2>
-      <form onSubmit={handleSubmit}>
+      <form className="form-turno" onSubmit={handleSubmit}>
         <div className="form-group">
           <label className="form-label">Patente</label>
           <input
