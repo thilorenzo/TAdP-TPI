@@ -1,23 +1,23 @@
 const { Router } = require('express');
 const {
   crearTurnoController,
+  listarTurnosController,
   listarPendientesController,
   obtenerTurnoController,
-  confirmarTurnoController
+  confirmarTurnoController,
+  completarTurnoController,
+  cancelarTurnoController
 } = require('../controllers/turnos.controller');
 
 const router = Router();
 
-// GET /api/turnos/pendientes
+router.get('/', listarTurnosController);
 router.get('/pendientes', listarPendientesController);
-
-// GET /api/turnos/:id
 router.get('/:id', obtenerTurnoController);
 
-// POST /api/turnos
 router.post('/', crearTurnoController);
-
-// POST /api/turnos/:id/confirmar
 router.post('/:id/confirmar', confirmarTurnoController);
+router.post('/:id/completar', completarTurnoController); // 👈 nuevo
+router.post('/:id/cancelar', cancelarTurnoController);
 
 module.exports = router;
